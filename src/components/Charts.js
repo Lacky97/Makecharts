@@ -1,5 +1,5 @@
 import { Bar, Pie, Doughnut, Radar, Line } from "react-chartjs-2";
-
+import Page404 from "../components/404";
 const ChartComponent = ({ type, data, id, legend, color }) => {
   function roundedRect(ctx, options) {
     ctx.strokeStyle = options.color;
@@ -107,7 +107,7 @@ const ChartComponent = ({ type, data, id, legend, color }) => {
           plugins={config.plugins}
         />
       );
-    case "Doughnut":
+    case "Dough":
       return (
         <Doughnut
           id={id}
@@ -121,7 +121,7 @@ const ChartComponent = ({ type, data, id, legend, color }) => {
     case "Line":
       return <Line id={id} data={dataLine} options={config.options} />;
     default:
-      return "404";
+      return <Page404 />;
   }
 };
 
