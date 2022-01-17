@@ -1,24 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import React, { useState,useEffect } from "react";
+import Home from "./components/Home";
+import NavBar from "./components/NavBar";
+import MyChart from "./components/MyChart";
 
 function App() {
+
+  const [isOpen, setIsOpen] = useState(false);
+  useEffect(() => {
+    const hideMenu = () => {
+      if (window.innerWidth > 768 && isOpen) {
+        setIsOpen(false);
+      }
+    };
+
+    window.addEventListener("resize", hideMenu);
+
+    return () => {
+      window.removeEventListener("resize", hideMenu);
+    };
+  });
+  const toggle = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <NavBar toggle={toggle} isOpen={isOpen} />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/chart" element={<MyChart />} />
+      </Routes>
+    </Router>
   );
 }
 
